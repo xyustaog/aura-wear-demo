@@ -2122,7 +2122,7 @@ function renderClientes() {
       <div class="flex gap-2" style="flex-wrap:wrap;">
         <button class="btn btn-ghost btn-sm" onclick="openCCModal('${c.id}')">Ver cuenta</button>
         <button class="btn btn-success btn-sm" onclick="openAbonoModal('${c.id}')">Registrar abono</button>
-        <a class="btn btn-ghost btn-sm" href="https://wa.me/54${(c.tel||'').replace(/\D/g,'')}?text=Hola%20${encodeURIComponent(c.nombre)},%20te%20contactamos%20desde%20Aura%20Wear" target="_blank">WhatsApp</a>
+        <a class="btn btn-ghost btn-sm" href="https://wa.me/54${(c.tel||'').replace(/\D/g,'').replace(/^54/,'')}?text=Hola%20${encodeURIComponent(c.nombre)},%20te%20contactamos%20desde%20Aura%20Wear" target="_blank">WhatsApp</a>
         <button class="btn btn-danger btn-sm" onclick="deleteClient('${c.id}')">✕</button>
       </div>
     </div>
