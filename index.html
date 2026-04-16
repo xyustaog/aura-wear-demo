@@ -1174,8 +1174,8 @@ function daysAgo(n) {
 
 const DEMO_PRODUCTS = [
   {
-    id: 'p1', nombre: 'Remera Basic Algodón', codigo: 'REM-001',
-    categoria: 'Ropa Hombre', marca: 'BásicWear', costo: 4000, precio: 8500,
+    id: 'p1', nombre: 'Remera Básica Algodón', codigo: 'REM-001',
+    categoria: 'Ropa Hombre', marca: 'Kosiuko', costo: 4200, precio: 9800, temporada: 'Básico/Permanente',
     variantes: [
       {talle:'S', color:'Blanco', stock:5},{talle:'M', color:'Blanco', stock:8},
       {talle:'L', color:'Blanco', stock:3},{talle:'XL', color:'Blanco', stock:2},
@@ -1184,8 +1184,8 @@ const DEMO_PRODUCTS = [
     ]
   },
   {
-    id: 'p2', nombre: 'Jean Slim Mujer', codigo: 'JEA-002',
-    categoria: 'Ropa Mujer', marca: 'DenimCo', costo: 9000, precio: 18500,
+    id: 'p2', nombre: 'Jean Slim Tiro Alto', codigo: 'JEA-002',
+    categoria: 'Ropa Mujer', marca: 'Rapsodia', costo: 11500, precio: 27900, temporada: 'Básico/Permanente',
     variantes: [
       {talle:'38', color:'Azul', stock:3},{talle:'40', color:'Azul', stock:5},
       {talle:'42', color:'Azul', stock:2},{talle:'44', color:'Azul', stock:1},
@@ -1194,35 +1194,37 @@ const DEMO_PRODUCTS = [
     ]
   },
   {
-    id: 'p3', nombre: 'Zapatillas Running', codigo: 'ZAP-003',
-    categoria: 'Calzado Hombre', marca: 'RunFast', costo: 22000, precio: 45000,
+    id: 'p3', nombre: 'Zapatillas Urbanas Running', codigo: 'ZAP-003',
+    categoria: 'Calzado Hombre', marca: 'Topper', costo: 28000, precio: 62000, temporada: 'Básico/Permanente',
     variantes: [
       {talle:'40', color:'Blanco', stock:2},{talle:'41', color:'Blanco', stock:3},
       {talle:'42', color:'Blanco', stock:4},{talle:'43', color:'Blanco', stock:2},
-      {talle:'44', color:'Blanco', stock:1},
+      {talle:'44', color:'Blanco', stock:1},{talle:'42', color:'Negro', stock:3},
+      {talle:'43', color:'Negro', stock:2},{talle:'44', color:'Negro', stock:1},
     ]
   },
   {
-    id: 'p4', nombre: 'Vestido Floral', codigo: 'VES-004',
-    categoria: 'Ropa Mujer', marca: 'FloralChic', costo: 10000, precio: 22000,
+    id: 'p4', nombre: 'Vestido Midi Estampado', codigo: 'VES-004',
+    categoria: 'Ropa Mujer', marca: 'Vitamina', costo: 14500, precio: 34900, temporada: 'Primavera',
     variantes: [
-      {talle:'S', color:'Floreado', stock:3},{talle:'M', color:'Floreado', stock:5},
-      {talle:'L', color:'Floreado', stock:2},
+      {talle:'S', color:'Floral', stock:3},{talle:'M', color:'Floral', stock:5},
+      {talle:'L', color:'Floral', stock:2},{talle:'S', color:'Animal print', stock:2},
+      {talle:'M', color:'Animal print', stock:3},{talle:'L', color:'Animal print', stock:1},
     ]
   },
   {
-    id: 'p5', nombre: 'Campera Impermeable', codigo: 'CAM-005',
-    categoria: 'Ropa Hombre', marca: 'OutdoorX', costo: 18000, precio: 38000,
+    id: 'p5', nombre: 'Campera Rompevientos', codigo: 'CAM-005',
+    categoria: 'Ropa Hombre', marca: 'Complot', costo: 22000, precio: 51000, temporada: 'Otoño',
     variantes: [
-      {talle:'S', color:'Verde', stock:1},{talle:'M', color:'Verde', stock:2},
-      {talle:'L', color:'Verde', stock:3},{talle:'XL', color:'Verde', stock:1},
+      {talle:'S', color:'Verde oliva', stock:1},{talle:'M', color:'Verde oliva', stock:2},
+      {talle:'L', color:'Verde oliva', stock:3},{talle:'XL', color:'Verde oliva', stock:1},
       {talle:'S', color:'Negro', stock:0},{talle:'M', color:'Negro', stock:2},
       {talle:'L', color:'Negro', stock:2},{talle:'XL', color:'Negro', stock:1},
     ]
   },
   {
     id: 'p6', nombre: 'Botas Cuero Mujer', codigo: 'BOT-006',
-    categoria: 'Calzado Mujer', marca: 'CueroStyle', costo: 28000, precio: 55000,
+    categoria: 'Calzado Mujer', marca: 'Prune', costo: 38000, precio: 89000, temporada: 'Otoño',
     variantes: [
       {talle:'36', color:'Negro', stock:2},{talle:'37', color:'Negro', stock:1},
       {talle:'38', color:'Negro', stock:3},{talle:'39', color:'Negro', stock:2},
@@ -1233,106 +1235,186 @@ const DEMO_PRODUCTS = [
     ]
   },
   {
-    id: 'p7', nombre: 'Bermuda Hombre', codigo: 'BER-007',
-    categoria: 'Ropa Hombre', marca: 'SummerCo', costo: 5500, precio: 12000,
+    id: 'p7', nombre: 'Bermuda Cargo Hombre', codigo: 'BER-007',
+    categoria: 'Ropa Hombre', marca: '47 Street', costo: 7200, precio: 16900, temporada: 'Verano',
     variantes: [
       {talle:'S', color:'Beige', stock:4},{talle:'M', color:'Beige', stock:6},
       {talle:'L', color:'Beige', stock:3},{talle:'XL', color:'Beige', stock:2},
-      {talle:'S', color:'Azul', stock:3},{talle:'M', color:'Azul', stock:5},
-      {talle:'L', color:'Azul', stock:2},{talle:'XL', color:'Azul', stock:1},
+      {talle:'S', color:'Verde militar', stock:3},{talle:'M', color:'Verde militar', stock:5},
+      {talle:'L', color:'Verde militar', stock:2},{talle:'XL', color:'Verde militar', stock:1},
     ]
   },
   {
-    id: 'p8', nombre: 'Cartera Cuero', codigo: 'CAR-008',
-    categoria: 'Accesorios', marca: 'AccessPro', costo: 12000, precio: 28000,
+    id: 'p8', nombre: 'Cartera Mini Cuero', codigo: 'CAR-008',
+    categoria: 'Accesorios', marca: 'Ginebra', costo: 15000, precio: 36500, temporada: 'Básico/Permanente',
     variantes: [
       {talle:'Único', color:'Negro', stock:4},
       {talle:'Único', color:'Marrón', stock:3},
+      {talle:'Único', color:'Camel', stock:2},
     ]
   },
   {
-    id: 'p9', nombre: 'Zapatillas Casual Mujer', codigo: 'ZAP-009',
-    categoria: 'Calzado Mujer', marca: 'CasualStep', costo: 15000, precio: 32000,
+    id: 'p9', nombre: 'Zapatillas Plataforma Mujer', codigo: 'ZAP-009',
+    categoria: 'Calzado Mujer', marca: 'Ricky Sarkany', costo: 22000, precio: 54000, temporada: 'Primavera',
     variantes: [
       {talle:'36', color:'Blanco', stock:3},{talle:'37', color:'Blanco', stock:4},
       {talle:'38', color:'Blanco', stock:5},{talle:'39', color:'Blanco', stock:2},
-      {talle:'40', color:'Blanco', stock:1},
+      {talle:'40', color:'Blanco', stock:1},{talle:'37', color:'Negro', stock:3},
+      {talle:'38', color:'Negro', stock:4},{talle:'39', color:'Negro', stock:2},
     ]
   },
   {
-    id: 'p10', nombre: 'Buzo Oversize', codigo: 'BUZ-010',
-    categoria: 'Ropa Mujer', marca: 'OverTrend', costo: 7000, precio: 15000,
+    id: 'p10', nombre: 'Buzo Oversize Cropped', codigo: 'BUZ-010',
+    categoria: 'Ropa Mujer', marca: 'Kosiuko', costo: 8500, precio: 19900, temporada: 'Básico/Permanente',
     variantes: [
       {talle:'XS', color:'Gris', stock:3},{talle:'S', color:'Gris', stock:5},
       {talle:'M', color:'Gris', stock:4},{talle:'L', color:'Gris', stock:2},
-      {talle:'XS', color:'Rosa', stock:2},{talle:'S', color:'Rosa', stock:3},
-      {talle:'M', color:'Rosa', stock:2},{talle:'L', color:'Rosa', stock:1},
+      {talle:'XS', color:'Rosa palo', stock:2},{talle:'S', color:'Rosa palo', stock:3},
+      {talle:'M', color:'Rosa palo', stock:2},{talle:'L', color:'Rosa palo', stock:1},
+    ]
+  },
+  {
+    id: 'p11', nombre: 'Pollera Midi Plisada', codigo: 'POL-011',
+    categoria: 'Ropa Mujer', marca: 'Vitamina', costo: 9800, precio: 23500, temporada: 'Primavera',
+    variantes: [
+      {talle:'S', color:'Terracota', stock:4},{talle:'M', color:'Terracota', stock:6},
+      {talle:'L', color:'Terracota', stock:3},{talle:'S', color:'Negro', stock:5},
+      {talle:'M', color:'Negro', stock:7},{talle:'L', color:'Negro', stock:4},
+    ]
+  },
+  {
+    id: 'p12', nombre: 'Pantalón Chino Slim', codigo: 'PAN-012',
+    categoria: 'Ropa Hombre', marca: 'Complot', costo: 10500, precio: 24900, temporada: 'Básico/Permanente',
+    variantes: [
+      {talle:'38', color:'Beige', stock:5},{talle:'40', color:'Beige', stock:6},
+      {talle:'42', color:'Beige', stock:4},{talle:'44', color:'Beige', stock:2},
+      {talle:'38', color:'Azul marino', stock:4},{talle:'40', color:'Azul marino', stock:5},
+      {talle:'42', color:'Azul marino', stock:3},{talle:'44', color:'Azul marino', stock:1},
     ]
   },
 ];
 
 const DEMO_CLIENTS = [
-  { id: 'c1', nombre: 'Laura Gómez', tel: '11 4567-8901', email: 'laura@mail.com', saldo: -15000,
+  { id: 'c1', nombre: 'Sofía Fernández', tel: '11 4567-8901', email: 'sofi.fernandez@gmail.com', saldo: -15400,
     cc: [
-      { id:uid(), tipo:'compra', desc:'Jean Slim Azul T40', monto: 18500, fecha: daysAgo(5)+'T10:30:00', metodo:'cc' },
-      { id:uid(), tipo:'abono', desc:'Abono efectivo', monto: 3500, fecha: daysAgo(3)+'T14:00:00', metodo:'efectivo' },
+      { id:uid(), tipo:'compra', desc:'Jean Slim Tiro Alto Azul T40', monto: 27900, fecha: daysAgo(5)+'T10:30:00', metodo:'cc' },
+      { id:uid(), tipo:'abono', desc:'Abono efectivo', monto: 12500, fecha: daysAgo(3)+'T14:00:00', metodo:'efectivo' },
     ]
   },
-  { id: 'c2', nombre: 'Carlos Méndez', tel: '11 3456-7890', email: 'carlos@mail.com', saldo: -28000,
+  { id: 'c2', nombre: 'Diego Ramírez', tel: '11 3456-7890', email: 'diego.ramirez@hotmail.com', saldo: -34500,
     cc: [
-      { id:uid(), tipo:'compra', desc:'Campera Impermeable + Bermuda', monto: 50000, fecha: daysAgo(10)+'T11:00:00', metodo:'cc' },
-      { id:uid(), tipo:'abono', desc:'Abono transferencia', monto: 22000, fecha: daysAgo(7)+'T15:30:00', metodo:'transferencia' },
+      { id:uid(), tipo:'compra', desc:'Campera Rompevientos Negro + Bermuda Beige', monto: 67900, fecha: daysAgo(10)+'T11:00:00', metodo:'cc' },
+      { id:uid(), tipo:'abono', desc:'Abono transferencia', monto: 33400, fecha: daysAgo(7)+'T15:30:00', metodo:'transferencia' },
     ]
   },
-  { id: 'c3', nombre: 'Valentina Ruiz', tel: '11 2345-6789', email: 'vale@mail.com', saldo: 0,
+  { id: 'c3', nombre: 'Valentina Torres', tel: '11 2345-6789', email: 'vale.torres@gmail.com', saldo: 0,
     cc: []
   },
-  { id: 'c4', nombre: 'Martín López', tel: '11 9876-5432', email: 'martin@mail.com', saldo: -8500,
+  { id: 'c4', nombre: 'Martín González', tel: '11 9876-5432', email: 'martin.glez@gmail.com', saldo: -9800,
     cc: [
-      { id:uid(), tipo:'compra', desc:'Remera Basic Blanco T-M', monto: 8500, fecha: daysAgo(2)+'T09:15:00', metodo:'cc' },
+      { id:uid(), tipo:'compra', desc:'Remera Básica Algodón Blanco T-M', monto: 9800, fecha: daysAgo(2)+'T09:15:00', metodo:'cc' },
+    ]
+  },
+  { id: 'c5', nombre: 'Camila Rodríguez', tel: '11 5544-3322', email: 'cami.rodriguez@gmail.com', saldo: 0,
+    cc: []
+  },
+  { id: 'c6', nombre: 'Lucas Pereyra', tel: '11 6677-8899', email: 'lucas.pereyra@yahoo.com.ar', saldo: -21000,
+    cc: [
+      { id:uid(), tipo:'compra', desc:'Zapatillas Urbanas Running Negro T42', monto: 62000, fecha: daysAgo(8)+'T16:00:00', metodo:'cc' },
+      { id:uid(), tipo:'abono', desc:'Abono efectivo', monto: 41000, fecha: daysAgo(4)+'T10:00:00', metodo:'efectivo' },
     ]
   },
 ];
 
 const DEMO_VENTAS = [
   {
-    id: uid(), fecha: todayISO()+'T09:30:00', items: [
-      { prodId:'p1', nombre:'Remera Basic Algodón', talle:'M', color:'Blanco', qty:1, precio:8500 },
-    ], total: 8500, metodo:'efectivo', clienteId: null
+    id: uid(), fecha: todayISO()+'T09:15:00', items: [
+      { prodId:'p1', nombre:'Remera Básica Algodón', talle:'M', color:'Blanco', qty:2, precio:9800 },
+    ], total: 19600, metodo:'efectivo', clienteId: null
   },
   {
-    id: uid(), fecha: todayISO()+'T11:15:00', items: [
-      { prodId:'p9', nombre:'Zapatillas Casual Mujer', talle:'38', color:'Blanco', qty:1, precio:32000 },
-    ], total: 32000, metodo:'tarjeta', clienteId: null
+    id: uid(), fecha: todayISO()+'T10:40:00', items: [
+      { prodId:'p9', nombre:'Zapatillas Plataforma Mujer', talle:'38', color:'Blanco', qty:1, precio:54000 },
+    ], total: 54000, metodo:'tarjeta', clienteId: null
   },
   {
-    id: uid(), fecha: todayISO()+'T13:45:00', items: [
-      { prodId:'p10', nombre:'Buzo Oversize', talle:'S', color:'Rosa', qty:1, precio:15000 },
-      { prodId:'p8', nombre:'Cartera Cuero', talle:'Único', color:'Negro', qty:1, precio:28000 },
-    ], total: 43000, metodo:'transferencia', clienteId: null
+    id: uid(), fecha: todayISO()+'T12:20:00', items: [
+      { prodId:'p10', nombre:'Buzo Oversize Cropped', talle:'S', color:'Rosa palo', qty:1, precio:19900 },
+      { prodId:'p8', nombre:'Cartera Mini Cuero', talle:'Único', color:'Negro', qty:1, precio:36500 },
+    ], total: 56400, metodo:'transferencia', clienteId: null
+  },
+  {
+    id: uid(), fecha: todayISO()+'T14:05:00', items: [
+      { prodId:'p2', nombre:'Jean Slim Tiro Alto', talle:'40', color:'Azul', qty:1, precio:27900 },
+      { prodId:'p11', nombre:'Pollera Midi Plisada', talle:'M', color:'Negro', qty:1, precio:23500 },
+    ], total: 51400, metodo:'tarjeta', clienteId: 'c5'
+  },
+  {
+    id: uid(), fecha: todayISO()+'T15:30:00', items: [
+      { prodId:'p12', nombre:'Pantalón Chino Slim', talle:'42', color:'Beige', qty:1, precio:24900 },
+    ], total: 24900, metodo:'efectivo', clienteId: null
   },
 ];
 
 const DEMO_PROVEEDORES = [
   {
-    id: 'pv1', nombre: 'Distribuidora TextilSur', tel: '011 4321-0987', marcas: 'BásicWear, OverTrend, SummerCo', deuda: 85000,
+    id: 'pv1', nombre: 'Distribuidora Textil del Sur S.A.', tel: '011 4321-0987', marcas: 'Kosiuko, Complot, 47 Street', deuda: 145000,
     ordenes: [
-      { id:uid(), desc:'Pedido remeras y buzos T1/2025', monto:85000, fecha:daysAgo(15), pagado:false },
+      { id:uid(), desc:'Pedido remeras, buzos y pantalones T1/2025', monto:145000, fecha:daysAgo(15), pagado:false },
+      { id:uid(), desc:'Reposición temporada verano 2024', monto:98000, fecha:daysAgo(45), pagado:true },
     ]
   },
   {
-    id: 'pv2', nombre: 'Importadora CalzStyle', tel: '011 9876-1234', marcas: 'RunFast, CasualStep, CueroStyle', deuda: 0,
+    id: 'pv2', nombre: 'Importadora de Calzado Rioplatense', tel: '011 9876-1234', marcas: 'Topper, Ricky Sarkany, Prune', deuda: 0,
     ordenes: [
-      { id:uid(), desc:'Lote zapatillas invierno', monto:120000, fecha:daysAgo(30), pagado:true },
+      { id:uid(), desc:'Lote zapatillas y botas invierno 2025', monto:230000, fecha:daysAgo(30), pagado:true },
+      { id:uid(), desc:'Colección primavera zapatillas plataforma', monto:175000, fecha:daysAgo(12), pagado:true },
+    ]
+  },
+  {
+    id: 'pv3', nombre: 'Accesorios & Marroquinería Buenos Aires', tel: '011 5544-7788', marcas: 'Ginebra, Rapsodia, Vitamina', deuda: 62500,
+    ordenes: [
+      { id:uid(), desc:'Carteras y accesorios primavera/verano', monto:62500, fecha:daysAgo(8), pagado:false },
     ]
   },
 ];
 
-const DEMO_GASTOS = [];
+const DEMO_GASTOS = [
+  { id: uid(), desc: 'Alquiler local comercial', monto: 85000, fecha: todayISO() },
+  { id: uid(), desc: 'Bolsas y packaging', monto: 12500, fecha: todayISO() },
+];
+
+const DEMO_APARTADOS = [
+  {
+    id: uid(),
+    clienteId: 'c1', prodId: 'p6', varIdx: 2, qty: 1,
+    prodNombre: 'Botas Cuero Mujer', talle: '38', color: 'Negro',
+    total: 89000, senal: 30000, fechaLimite: daysAgo(-10),
+    notas: 'Reserva para regalo de cumpleaños', estado: 'activo',
+    creado: daysAgo(3)+'T11:00:00'
+  },
+  {
+    id: uid(),
+    clienteId: 'c3', prodId: 'p4', varIdx: 1, qty: 1,
+    prodNombre: 'Vestido Midi Estampado', talle: 'M', color: 'Floral',
+    total: 34900, senal: 15000, fechaLimite: daysAgo(-5),
+    notas: '', estado: 'activo',
+    creado: daysAgo(6)+'T14:30:00'
+  },
+  {
+    id: uid(),
+    clienteId: 'c5', prodId: 'p9', varIdx: 2, qty: 1,
+    prodNombre: 'Zapatillas Plataforma Mujer', talle: '38', color: 'Blanco',
+    total: 54000, senal: 54000, fechaLimite: daysAgo(-1),
+    notas: 'Pagó señal completa', estado: 'retirado',
+    creado: daysAgo(12)+'T10:00:00'
+  },
+];
+const WEEKLY_TOTALS = [54200, 71800, 43500, 89300, 62100, 105400, 83500];
 const DEMO_WEEKLY = [0,1,2,3,4,5,6].map(i => ({
   dia: daysAgo(6-i),
   label: new Date(daysAgo(6-i)+'T12:00').toLocaleDateString('es-AR',{weekday:'short'}),
-  total: i === 6 ? 83500 : Math.floor(Math.random()*80000 + 20000)
+  total: WEEKLY_TOTALS[i]
 }));
 
 function buildInitialState() {
@@ -1341,9 +1423,9 @@ function buildInitialState() {
     clients: DEMO_CLIENTS,
     ventas: DEMO_VENTAS,
     proveedores: DEMO_PROVEEDORES,
-    gastos: DEMO_GASTOS,
+    gastos: [...DEMO_GASTOS],
     weekly: DEMO_WEEKLY,
-    apartados: [],
+    apartados: DEMO_APARTADOS,
     cart: [],
     pagoMethod: 'efectivo',
     ccClientId: null,
@@ -1360,6 +1442,9 @@ function buildInitialState() {
 let state = loadState() || buildInitialState();
 // Always recalculate weekly labels based on actual dates (in case of new session)
 state.weekly = DEMO_WEEKLY;
+// Seed demo data if arrays are empty (fresh or cleared localStorage)
+if(!state.apartados || state.apartados.length === 0) state.apartados = DEMO_APARTADOS;
+if(!state.gastos || state.gastos.length === 0) state.gastos = [...DEMO_GASTOS];
 
 // ══════════════════════════════════════════════════════════════
 //  NAV
@@ -1812,7 +1897,7 @@ function renderCatalog() {
 
   document.getElementById('catalog-list').innerHTML = prods.map(p => {
     const totalStock = p.variantes.reduce((a,v)=>a+v.stock,0);
-    const margin = Math.round((1 - p.costo/p.precio)*100);
+    const margin = p.precio > 0 ? Math.round((1 - p.costo/p.precio)*100) : 0;
     const critVar = p.variantes.filter(v=>v.stock<=2 && v.stock>0).length;
     const outVar = p.variantes.filter(v=>v.stock===0).length;
     const variantesSummary = p.variantes.slice(0,6).map(v => {
@@ -2227,7 +2312,7 @@ function renderProveedores() {
       <div class="order-entry">
         <div>
           <div style="font-weight:400;">${o.desc}</div>
-          <div class="text-muted">${fmtDate(o.fecha+'T00:00')}</div>
+          <div class="text-muted">${fmtDate(o.fecha.length===10 ? o.fecha+'T12:00:00' : o.fecha)}</div>
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
           <span style="font-weight:300; font-size:15px; color:${o.pagado?'var(--success)':'var(--danger)'};">${fmt(o.monto)}</span>
@@ -2392,7 +2477,7 @@ function renderCaja() {
             <div class="gasto-item">
               <div>
                 <div style="font-size:13px; font-weight:400;">${g.desc}</div>
-                <div class="text-muted">${fmtDate(g.fecha+'T12:00')}</div>
+                <div class="text-muted">${fmtDate(g.fecha.length===10 ? g.fecha+'T12:00:00' : g.fecha)}</div>
               </div>
               <div style="display:flex; align-items:center; gap:6px;">
                 <span style="font-weight:300; font-size:15px; color:var(--danger);">${fmt(g.monto)}</span>
@@ -2534,9 +2619,8 @@ function reporteMensual() {
 
   // Sheet 2: Resumen
   const totalVentas = ventasMes.reduce((a,v) => a + v.total, 0);
-  const totalIngresos = cajaMes.filter(x => x.tipo === 'ingreso').reduce((a,x) => a + x.monto, 0);
   const totalGastos = cajaMes.reduce((a,x) => a + x.monto, 0);
-  const neto = totalVentas + totalIngresos - totalGastos;
+  const neto = totalVentas - totalGastos;
 
   // Producto más vendido
   const prodQty = {};
@@ -2555,7 +2639,6 @@ function reporteMensual() {
     ['Concepto', 'Valor'],
     ['Total ventas', totalVentas],
     ['N° transacciones', ventasMes.length],
-    ['Total ingresos caja', totalIngresos],
     ['Total gastos', totalGastos],
     ['Neto', neto],
     ['Producto más vendido', topProd + (topQty > 0 ? ` (${topQty} uds)` : '')],
@@ -2639,7 +2722,7 @@ function renderApartados() {
     const balance = ap.total - ap.senal;
     let estado = ap.estado;
     if(estado === 'activo' && ap.fechaLimite < today2) estado = 'vencido';
-    const daysLeft = Math.ceil((new Date(ap.fechaLimite) - new Date(today2)) / 864e5);
+    const daysLeft = Math.ceil((new Date(ap.fechaLimite+'T12:00:00') - new Date(today2+'T12:00:00')) / 864e5);
     const estadoColor = estado==='retirado' ? 'var(--success)' : estado==='vencido' ? 'var(--danger)' : 'var(--warning)';
     return `<div class="card" style="border-left:3px solid ${estadoColor};margin-bottom:12px;">
       <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:8px;margin-bottom:10px;">
@@ -2654,7 +2737,7 @@ function renderApartados() {
       </div>
       <div class="flex gap-3" style="font-size:12px;color:var(--gray400);margin-bottom:10px;flex-wrap:wrap;">
         <span>Estado: <strong style="color:${estadoColor};">${estado.toUpperCase()}</strong></span>
-        <span>Retiro: ${fmtDate(ap.fechaLimite)}</span>
+        <span>Retiro: ${fmtDate(ap.fechaLimite+'T12:00:00')}</span>
         ${estado==='activo' ? `<span style="color:${daysLeft<=3?'var(--danger)':'var(--gray400)'};">${daysLeft>0?daysLeft+' días':daysLeft===0?'HOY':'VENCIDO'}</span>` : ''}
         ${ap.notas ? `<span>📝 ${ap.notas}</span>` : ''}
       </div>
@@ -2733,9 +2816,13 @@ function openDevolucionModal(ventaId) {
 }
 
 function devTipoChange() {
-  const tipo = document.getElementById('dev-tipo').value;
-  document.getElementById('dev-metodo-wrap').classList.toggle('hidden', tipo==='cambio');
-  document.getElementById('dev-cambio-wrap').classList.toggle('hidden', tipo!=='cambio');
+  const tipoEl = document.getElementById('dev-tipo');
+  const metodoWrap = document.getElementById('dev-metodo-wrap');
+  const cambioWrap = document.getElementById('dev-cambio-wrap');
+  if(!tipoEl || !metodoWrap || !cambioWrap) return;
+  const tipo = tipoEl.value;
+  metodoWrap.classList.toggle('hidden', tipo==='cambio');
+  cambioWrap.classList.toggle('hidden', tipo!=='cambio');
 }
 
 function confirmarDevolucion() {
