@@ -1443,8 +1443,16 @@ let state = loadState() || buildInitialState();
 // Always recalculate weekly labels based on actual dates (in case of new session)
 state.weekly = DEMO_WEEKLY;
 // Seed demo data if arrays are empty (fresh or cleared localStorage)
-if(!state.apartados || state.apartados.length === 0) state.apartados = DEMO_APARTADOS;
+if(!state.apartados || state.apartados.length === 0) state.apartados = [...DEMO_APARTADOS];
 if(!state.gastos || state.gastos.length === 0) state.gastos = [...DEMO_GASTOS];
+// Guards: ensure all arrays exist even if localStorage was partial
+if(!Array.isArray(state.apartados)) state.apartados = [];
+if(!Array.isArray(state.gastos)) state.gastos = [];
+if(!Array.isArray(state.cart)) state.cart = [];
+if(!Array.isArray(state.ventas)) state.ventas = [...DEMO_VENTAS];
+if(!Array.isArray(state.products)) state.products = [...DEMO_PRODUCTS];
+if(!Array.isArray(state.clients)) state.clients = [...DEMO_CLIENTS];
+if(!Array.isArray(state.proveedores)) state.proveedores = [...DEMO_PROVEEDORES];
 
 // ══════════════════════════════════════════════════════════════
 //  NAV
@@ -1653,14 +1661,30 @@ function getAvailableColors() {
 }
 
 function renderTalles() {
+  if(!posSelectedProduct) {
+    document.getElementById('pos-talle-grid').innerHTML = '<span class="text-muted" style="font-size:11px;">Sin stock disponible</span>';
+    return;
+  }
   const talles = getAvailableTalles();
+  if(talles.length === 0) {
+    document.getElementById('pos-talle-grid').innerHTML = '<span class="text-muted" style="font-size:11px;">Sin stock disponible</span>';
+    return;
+  }
   document.getElementById('pos-talle-grid').innerHTML = talles.map(t => {
     const totalStock = posSelectedProduct.variantes.filter(v=>v.talle===t).reduce((a,v)=>a+v.stock,0);
     return `<div class="variant-chip ${posSelectedTalle===t?'selected':''} ${totalStock===0?'out':''}" onclick="${totalStock>0?`posSelectTalle('${t}')`:''}">T${t}</div>`;
   }).join('');
 }
 function renderColors() {
+  if(!posSelectedProduct) {
+    document.getElementById('pos-color-grid').innerHTML = '<span class="text-muted" style="font-size:11px;">Sin stock disponible</span>';
+    return;
+  }
   const colors = getAvailableColors();
+  if(colors.length === 0) {
+    document.getElementById('pos-color-grid').innerHTML = '<span class="text-muted" style="font-size:11px;">Sin stock disponible</span>';
+    return;
+  }
   document.getElementById('pos-color-grid').innerHTML = colors.map(c => {
     let stock = 0;
     if(posSelectedTalle) {
@@ -2215,7 +2239,9 @@ function renderClientes() {
 }
 
 function openCCModal(clientId) {
+  if(!clientId) return toast('Cliente no especificado', 'error');
   const c = state.clients.find(c=>c.id===clientId);
+  if(!c) return toast('Cliente no encontrado', 'error');
   const entries = [...(c.cc||[])].reverse();
   document.getElementById('modal-cc-content').innerHTML = `
     <div class="modal-title">${c.nombre}</div>
@@ -2774,6 +2800,10 @@ function cancelarApartado(id) {
 // ══════════════════════════════════════════════════════════════
 //  DEVOLUCIONES / CAMBIOS
 // ══════════════════════════════════════════════════════════════
+
+// Alias explícito — evita ReferenceError si algún onclick llama renderDevolucionModal
+function renderDevolucionModal(ventaId) { openDevolucionModal(ventaId); }
+
 function openDevolucionModal(ventaId) {
   state.devolucionVentaId = ventaId;
   const v = state.ventas.find(x=>x.id===ventaId);
@@ -2823,48 +2853,121 @@ function devTipoChange() {
   const tipo = tipoEl.value;
   metodoWrap.classList.toggle('hidden', tipo==='cambio');
   cambioWrap.classList.toggle('hidden', tipo!=='cambio');
+  // Populate nueva-variante select when cambio is chosen
+  if(tipo === 'cambio') {
+    const ventaId = state.devolucionVentaId;
+    const v = ventaId ? state.ventas.find(x=>x.id===ventaId) : null;
+    const varSel = document.getElementById('dev-nueva-variante');
+    if(!varSel) return;
+    // Collect all products from the sale items and list their variants
+    const options = [];
+    const seenProds = new Set();
+    if(v) {
+      v.items.forEach(item => {
+        if(seenProds.has(item.prodId)) return;
+        seenProds.add(item.prodId);
+        const p = state.products.find(x=>x.id===item.prodId);
+        if(!p) return;
+        p.variantes.forEach((variant, idx) => {
+          if(variant.stock > 0) {
+            options.push(`<option value="${p.id}|${idx}">${p.nombre} — T${variant.talle} / ${variant.color} (stock: ${variant.stock})</option>`);
+          }
+        });
+      });
+    }
+    varSel.innerHTML = options.length > 0
+      ? options.join('')
+      : '<option value="">Sin variantes con stock disponible</option>';
+  }
 }
 
 function confirmarDevolucion() {
   const ventaId = state.devolucionVentaId;
+  if(!ventaId) return toast('No hay venta seleccionada', 'error');
   const v = state.ventas.find(x=>x.id===ventaId);
-  if(!v) return;
+  if(!v) return toast('Venta no encontrada', 'error');
+
   const selItems = [];
   v.items.forEach((item,i) => {
     const cb = document.getElementById(`dev-item-${i}`);
     if(cb && cb.checked) selItems.push(item);
   });
   if(selItems.length === 0) return toast('Seleccioná al menos un ítem', 'error');
-  const razon = document.getElementById('dev-razon').value;
-  const tipo = document.getElementById('dev-tipo').value;
-  const monto = selItems.reduce((a,i)=>a+i.precio*i.qty,0);
 
-  // Restore stock
+  const razonEl = document.getElementById('dev-razon');
+  const tipoEl = document.getElementById('dev-tipo');
+  if(!razonEl || !tipoEl) return toast('Error en formulario', 'error');
+  const razon = razonEl.value;
+  const tipo = tipoEl.value;
+  const monto = selItems.reduce((a,i)=>a+i.precio*i.qty, 0);
+
+  // Restore stock for returned items
   selItems.forEach(item => {
     const p = state.products.find(x=>x.id===item.prodId);
     if(p) {
-      const variant = p.variantes.find(vv=>vv.talle===item.talle&&vv.color===item.color);
+      const variant = p.variantes.find(vv=>vv.talle===item.talle && vv.color===item.color);
       if(variant) variant.stock += item.qty;
     }
   });
 
-  // Record reverse transaction
-  state.ventas.push({
-    id: uid(),
-    fecha: new Date().toISOString(),
-    items: selItems.map(i=>({...i, qty:-i.qty})),
-    total: -monto,
-    metodo: tipo==='devolucion' ? (document.getElementById('dev-metodo').value) : 'cambio',
-    clienteId: v.clienteId,
-    tipo: tipo==='devolucion'?'devolucion':'cambio',
-    razon,
-    refVentaId: ventaId
-  });
+  if(tipo === 'cambio') {
+    // Deduct stock for the new variant chosen
+    const varSel = document.getElementById('dev-nueva-variante');
+    if(varSel && varSel.value) {
+      const [newProdId, newVarIdx] = varSel.value.split('|');
+      const newProd = newProdId ? state.products.find(x=>x.id===newProdId) : null;
+      const newVariant = newProd ? newProd.variantes[parseInt(newVarIdx)] : null;
+      if(newVariant) {
+        const totalQty = selItems.reduce((a,i)=>a+i.qty, 0);
+        if(newVariant.stock < totalQty) return toast('Stock insuficiente para el cambio', 'error');
+        newVariant.stock -= totalQty;
+      }
+    }
+    state.ventas.push({
+      id: uid(),
+      fecha: new Date().toISOString(),
+      items: selItems.map(i=>({...i, qty:-i.qty})),
+      total: 0, // cambio sin devolución de dinero
+      metodo: 'cambio',
+      clienteId: v.clienteId,
+      tipo: 'cambio',
+      razon,
+      refVentaId: ventaId
+    });
+    saveState();
+    closeModal('modal-devolucion');
+    renderCaja();
+    toast(`Cambio registrado — ${fmt(monto)}`);
+  } else {
+    // Devolución: registrar crédito
+    const metodoEl = document.getElementById('dev-metodo');
+    const metodo = metodoEl ? metodoEl.value : 'efectivo';
 
-  saveState();
-  closeModal('modal-devolucion');
-  renderCaja();
-  toast(`${tipo==='devolucion'?'Devolución':'Cambio'} registrado — ${fmt(monto)}`);
+    // If CC credit, add to client account
+    if(metodo === 'cc' && v.clienteId) {
+      const client = state.clients.find(c=>c.id===v.clienteId);
+      if(client) {
+        client.cc.push({ id:uid(), tipo:'abono', desc:`Devolución — ${razon}`, monto, fecha:new Date().toISOString(), metodo:'cc' });
+        client.saldo += monto;
+      }
+    }
+
+    state.ventas.push({
+      id: uid(),
+      fecha: new Date().toISOString(),
+      items: selItems.map(i=>({...i, qty:-i.qty})),
+      total: -monto,
+      metodo,
+      clienteId: v.clienteId,
+      tipo: 'devolucion',
+      razon,
+      refVentaId: ventaId
+    });
+    saveState();
+    closeModal('modal-devolucion');
+    renderCaja();
+    toast(`Devolución registrada — ${fmt(monto)}`);
+  }
 }
 
 // ══════════════════════════════════════════════════════════════
