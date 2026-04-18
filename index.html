@@ -618,6 +618,29 @@
 
   .cc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
   .notif-badge { background:#e11d48; color:#fff; font-size:10px; border-radius:999px; padding:2px 6px; margin-left:auto; font-weight:700; }
+  /* AGENTES IA */
+  .agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .agent-card{display:flex;flex-direction:column;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:0;padding:16px}
+  .agent-header{display:flex;align-items:flex-start;gap:10px}
+  .agent-icon{width:36px;height:36px;background:rgba(201,169,110,0.12);border-radius:0;display:flex;align-items:center;justify-content:center;color:var(--primary);flex-shrink:0}
+  .agent-name{font-size:14px;font-weight:600;color:var(--text)}
+  .agent-tag{font-size:11px;color:var(--success);font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+  .agent-desc{font-size:13px;color:var(--text);opacity:.75;line-height:1.55;margin:0}
+  .agent-solves{list-style:none;display:flex;flex-direction:column;gap:5px;flex:1;padding:0;margin:0}
+  .agent-solves li{font-size:12px;color:var(--text);opacity:.7;padding-left:14px;position:relative;line-height:1.45}
+  .agent-solves li::before{content:'→';position:absolute;left:0;color:var(--primary);font-weight:600}
+  .agent-intro{background:rgba(201,169,110,0.08);border-left:3px solid var(--primary);padding:16px 20px;margin-bottom:20px}
+  .agent-intro-title{font-size:15px;font-weight:600;color:var(--primary);margin-bottom:4px;letter-spacing:.02em}
+  .agent-intro-sub{font-size:13px;color:var(--text);opacity:.75;line-height:1.5}
+  .agent-status{margin-left:auto;background:rgba(39,174,96,.15);color:var(--success);font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap;letter-spacing:.04em}
+  .agent-scenario{font-size:11px;font-weight:600;color:var(--text);opacity:.6;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .agent-flow{display:flex;flex-direction:column;gap:6px;margin:8px 0;padding:10px 12px;background:var(--surface);border:1px solid var(--border)}
+  .flow-step{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text);opacity:.85}
+  .flow-dot{width:18px;height:18px;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-top:1px}
+  .flow-dot.detect{background:#FCE7F3;color:#9D174D}
+  .flow-dot.analyze{background:rgba(212,160,23,.2);color:var(--warning)}
+  .flow-dot.act{background:rgba(39,174,96,.2);color:var(--success)}
+  @media(max-width:480px){.agents-grid{grid-template-columns:1fr}.flow-step{flex-direction:column;gap:4px}.agent-header{flex-wrap:wrap;gap:8px}.agent-status{margin-left:0}}
 </style>
 </head>
 <body>
@@ -649,6 +672,9 @@
       </button>
       <button class="nav-item" onclick="showSection('apartados')">
         <span class="icon">◫</span> Apartados
+      </button>
+      <button class="nav-item" onclick="showSection('agentes')">
+        <span class="icon">◆</span> Agentes IA
       </button>
     </div>
     <div class="sidebar-footer">
@@ -694,6 +720,20 @@
         <div class="card">
           <div class="card-title">Alertas de stock crítico</div>
           <div id="stock-alerts"></div>
+        </div>
+
+        <!-- AGENTES IA WIDGET -->
+        <div class="card" style="border-left:3px solid var(--primary)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="card-title" style="margin:0">◆ Actividad de Agentes IA</div>
+            <button class="btn btn-ghost" onclick="showSection('agentes')">Ver todos →</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="font-size:13px">El Vendedor Virtual — 9 consultas de talle respondidas por WhatsApp</span><span style="font-size:10px;padding:2px 8px;border-radius:99px;background:rgba(39,174,96,.15);color:var(--success);font-weight:600">Completado</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="font-size:13px">El Almacenero — vestido negro M en último stock, 4 ventas/semana</span><span style="font-size:10px;padding:2px 8px;border-radius:99px;background:rgba(212,160,23,.2);color:var(--warning);font-weight:600">Acción requerida</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="font-size:13px">El Analista — reporte semanal de mix por categoría listo</span><span style="font-size:10px;padding:2px 8px;border-radius:99px;background:rgba(39,174,96,.15);color:var(--success);font-weight:600">Completado</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="font-size:13px">El Promotor — 6 clientas VIP contactadas por nueva colección</span><span style="font-size:10px;padding:2px 8px;border-radius:99px;background:rgba(232,201,138,.2);color:var(--accent);font-weight:600">En proceso</span></div>
+          </div>
         </div>
       </div>
 
@@ -872,6 +912,14 @@
         </div>
         <div id="caja-content"></div>
       </div>
+
+      <!-- ════════════════════════════════ AGENTES IA ════════════════════════════════ -->
+      <div id="section-agentes" class="tab-section">
+        <div class="section-header">
+          <div class="section-title">Agentes IA</div>
+        </div>
+        <div id="agentes-content"></div>
+      </div>
     </div>
   </div>
 
@@ -901,6 +949,10 @@
       <button class="mob-nav-item" onclick="showSection('apartados')">
         <span class="icon">◫</span>
         <span>Apartados</span>
+      </button>
+      <button class="mob-nav-item" onclick="showSection('agentes')">
+        <span class="icon">◆</span>
+        <span>Agentes</span>
       </button>
     </div>
   </nav>
@@ -1504,6 +1556,37 @@ function render(section) {
   if(section === 'proveedores') renderProveedores();
   if(section === 'caja') renderCaja();
   if(section === 'apartados') renderApartados();
+  if(section === 'agentes') renderAgentes();
+}
+
+function renderAgentes(){
+  const el=document.getElementById('agentes-content');
+  if(!el)return;
+  const agents=[
+    {icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',tag:'Agente de atención',name:'El Vendedor Virtual',desc:'Una clienta manda WhatsApp un domingo: "¿Tenés el vestido negro del Instagram en talle M?" El agente consulta el stock, confirma talle y color disponible y ofrece reservarlo o coordinar entrega — sin que cierres el local para responder.',flow:[{t:'detect',l:'Detecta',v:'Mensaje entrante consultando talle, color, precio o disponibilidad de un producto'},{t:'analyze',l:'Analiza',v:'Busca el producto en catálogo, variantes de talle/color y stock actual por sucursal'},{t:'act',l:'Actúa',v:'Responde con disponibilidad, precio final y ofrece reservar, pagar online o retirar'}],solves:['Ventas perdidas fuera de horario porque nadie contesta Instagram o WhatsApp','Vendedoras atadas al teléfono en vez de atender en el local','Clientas que preguntan talle y nunca vuelven porque tardaste en responder']},
+    {icon:'<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',tag:'Agente de cobros',name:'El Cobrador',desc:'El apartado de Morales vence mañana y ya pagó solo 1 de 3 cuotas. El agente le manda el recordatorio con link de pago, registra la respuesta y si no paga en 72hs libera el producto al stock.',flow:[{t:'detect',l:'Detecta',v:'Apartado con cuota vencida o próxima a vencer sin registro de pago'},{t:'analyze',l:'Analiza',v:'Días transcurridos, cuotas pagas, monto pendiente y política de retención'},{t:'act',l:'Actúa',v:'Envía WhatsApp con link de Mercado Pago y escala o libera stock si no hay respuesta'}],solves:['Prendas trabadas en apartados que ya no va a pagar nadie','Clientas que abandonan el layaway y el producto queda fuera de catálogo','Tiempo perdido por vendedoras persiguiendo apartados por teléfono']},
+    {icon:'<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',tag:'Agente de stock',name:'El Almacenero',desc:'El vestido negro en talle M quedó en 1 unidad y se vende 4 veces por semana. Los blancos talle S no se mueven hace 45 días. El agente detecta ambos extremos y avisa antes de que te quedes sin el que vende o acumules el que no.',flow:[{t:'detect',l:'Detecta',v:'SKU por talle/color bajo stock mínimo o sobre-stockeado sin rotación'},{t:'analyze',l:'Analiza',v:'Velocidad de venta por variante, estacionalidad y proveedor más rápido'},{t:'act',l:'Actúa',v:'Sugiere reposición urgente o liquidación con descuento para mover stock muerto'}],solves:['Quedarte sin talles clave del producto estrella en plena temporada','Capital inmovilizado en prendas que nadie compra','Compras por intuición en vez de por datos de rotación reales']},
+    {icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',tag:'Agente de datos',name:'El Analista',desc:'Cada lunes a las 8am: "Ticket promedio $24.5k, categoría top: vestidos 38% del margen, 14 prendas sin vender hace 45d, vendedora top: Lu con $180k en ventas propias." Llega solo al WhatsApp de la dueña.',flow:[{t:'detect',l:'Detecta',v:'Cierre de semana o fin de mes configurado'},{t:'analyze',l:'Analiza',v:'Productos top, mix por categoría, margen por marca y productividad por vendedora'},{t:'act',l:'Actúa',v:'Envía reporte ejecutivo con KPIs y recomendaciones de compra y liquidación'}],solves:['No saber qué categoría o marca deja más margen real después de descuentos','Vendedoras cuya productividad nunca se mide de forma objetiva','Horas en Excel cruzando ventas con stock que terminan sin decisión']},
+    {icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',tag:'Agente de promoción',name:'El Promotor',desc:'Rodríguez compró 3 veces este año, ticket promedio $35k, no vuelve hace 3 semanas. Llega la colección nueva. El agente la detecta como VIP y le manda: "Sol, tenemos la nueva colección que es 100% tu estilo. Te reservamos acceso preview."',flow:[{t:'detect',l:'Detecta',v:'Clienta VIP identificada por frecuencia, ticket o preferencias registradas'},{t:'analyze',l:'Analiza',v:'Historial de compras, tallas habituales, estilo y categoría preferida'},{t:'act',l:'Actúa',v:'Envía oferta exclusiva o preview de colección con link directo al producto'}],solves:['No premiar a clientas VIP y perderlas por no sentirse especiales','Colecciones nuevas que salen sin que las mejores clientas se enteren','Tratar igual a la clienta ocasional que a la que te sostiene el mes']},
+    {icon:'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',tag:'Agente de retención',name:'El Fidelizador',desc:'Fernández compraba una vez por mes y no vuelve hace 100 días. El agente detecta el silencio y le manda: "Hola Jose, te extrañamos ✨ Te dejamos 15% en tu próxima compra + envío gratis hasta fin de mes."',flow:[{t:'detect',l:'Detecta',v:'Clienta sin compra registrada hace más de 90 días con historial recurrente'},{t:'analyze',l:'Analiza',v:'Frecuencia habitual, categorías favoritas y ticket promedio histórico'},{t:'act',l:'Actúa',v:'Envía oferta personalizada con cupón o descuento en su categoría favorita'}],solves:['Clientas que dejan de comprar sin aviso y nadie las recupera','Base de clientas que se achica sin explicación temporada a temporada','Perder repeat buyers por no hacer el contacto post-venta']}
+  ];
+  const tpl=agents.map(a=>`<div class="agent-card">
+  <div class="agent-header">
+    <div class="agent-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">${a.icon}</svg></div>
+    <div style="flex:1"><div class="agent-tag">${a.tag}</div><div class="agent-name">${a.name}</div></div>
+    <span class="agent-status">Activo</span>
+  </div>
+  <p class="agent-desc">${a.desc}</p>
+  <div class="agent-scenario">Cómo funciona dentro de Aura Wear</div>
+  <div class="agent-flow">${a.flow.map(f=>`<div class="flow-step"><div class="flow-dot ${f.t}">${f.l.slice(0,3).toUpperCase()}</div><div><strong>${f.l}</strong> — ${f.v}</div></div>`).join('')}</div>
+  <div class="agent-scenario" style="margin-top:6px">Problemas que elimina</div>
+  <ul class="agent-solves">${a.solves.map(s=>`<li>${s}</li>`).join('')}</ul>
+</div>`).join('');
+  el.innerHTML=`<div class="agent-intro">
+  <div class="agent-intro-title">Tus empleadas que trabajan 24/7 sin sueldo fijo</div>
+  <div class="agent-intro-sub">Cada agente monitorea stock, clientas y apartados — detecta situaciones clave y actúa solo, automatizando ventas, cobros, compras y retención para tu local de ropa.</div>
+</div>
+<div class="agents-grid">${tpl}</div>`;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1946,7 +2029,7 @@ function renderCatalog() {
               const stk = v ? v.stock : '-';
               const cls = !v ? 'color:var(--gray500)' : stk===0 ? 'color:var(--danger);font-weight:700' : stk<=2 ? 'color:var(--warning);font-weight:700' : 'color:var(--success)';
               const vi = v ? p.variantes.indexOf(v) : -1;
-              return `<td style="padding:3px 8px;border:1px solid var(--border);text-align:center;${cls}" ${vi>=0?`onclick="inlineEditStock('${p.id}',${vi},this)" title="Click para editar" style="cursor:pointer;padding:3px 8px;border:1px solid var(--border);text-align:center;${cls}"`:''}>${stk}</td>`;
+              return `<td style="padding:3px 8px;border:1px solid var(--border);text-align:center;${cls}${vi>=0?';cursor:pointer':''}" ${vi>=0?`onclick="inlineEditStock('${p.id}',${vi},this)" title="Click para editar"`:''}>${stk}</td>`;
             }).join('')}
           </tr>`).join('')}</tbody>
         </table>
@@ -2071,6 +2154,7 @@ function openStockModal(prodId) {
 
 function saveStockAdjust() {
   const p = state.products.find(p=>p.id===state.adjustingProduct);
+  if(!p) return;
   const inputs = document.querySelectorAll('#modal-stock-content input[data-vi]');
   inputs.forEach(inp => {
     const i = parseInt(inp.dataset.vi);
@@ -2102,6 +2186,7 @@ function openNewProductModal() {
 
 function openEditProduct(id) {
   const p = state.products.find(p=>p.id===id);
+  if(!p) return;
   state.editProductId = id;
   document.getElementById('modal-product-title').textContent = 'Editar Producto';
   document.getElementById('prod-name').value = p.nombre;
@@ -2271,6 +2356,7 @@ function openCCModal(clientId) {
 function openAbonoModal(clientId) {
   state.currentAbonClientId = clientId;
   const c = state.clients.find(c=>c.id===clientId);
+  if(!c) return;
   document.getElementById('abono-client-name').textContent = c.nombre + ' — Deuda: ' + fmt(Math.abs(Math.min(c.saldo,0)));
   document.getElementById('abono-monto').value = '';
   openModal('modal-abono');
